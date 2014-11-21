@@ -4,7 +4,7 @@ Route::any(Config::get('swaggervel::app.doc-route').'/{page?}', function($page='
     $filePath = Config::get('swaggervel::app.doc-dir') . "/{$page}";
 
     if (!File::Exists($filePath)) {
-        App::abort(404, "Cannot find {$filePath}");
+        abort(404, "Cannot find {$filePath}");
     }
 
     $content = File::get($filePath);
@@ -13,7 +13,7 @@ Route::any(Config::get('swaggervel::app.doc-route').'/{page?}', function($page='
     ));
 });
 
-Route::get('api-docs', function() {
+get('api-docs', function() {
     if (Config::get('swaggervel::app.generateAlways')) {
         $appDir = base_path()."/".Config::get('swaggervel::app.app-dir');
         $docDir = Config::get('swaggervel::app.doc-dir');
@@ -38,12 +38,12 @@ Route::get('api-docs', function() {
 
             $defaultApiVersion = Config::get('swaggervel::app.default-api-version');
             if ( ! empty($defaultApiVersion)) {
-               $apiVersion = " --default-api-version '{$defaultApiVersion}'";
+                $apiVersion = " --default-api-version '{$defaultApiVersion}'";
             }
 
             $defaultSwaggerVersion = Config::get('swaggervel::app.default-swagger-version');
             if ( ! empty($defaultSwaggerVersion)) {
-               $swaggerVersion = " --default-swagger-version '{$defaultSwaggerVersion}'";
+                $swaggerVersion = " --default-swagger-version '{$defaultSwaggerVersion}'";
             }
 
             $exludeDirs = Config::get('swaggervel::app.excludes');
@@ -62,20 +62,8 @@ Route::get('api-docs', function() {
         }
     }
 
-    if (Config::get('swaggervel::app.behind-reverse-proxy')) {
-        $proxy = Request::server('REMOTE_ADDR');
-        Request::setTrustedProxies(array($proxy));
-    }
-
-    Blade::setEscapedContentTags('{{{', '}}}');
-    Blade::setContentTags('{{', '}}');
-
     $response = Response::make(
-        View::make('swaggervel::index', array(
-            'secure'         => Request::secure(),
-            'urlToDocs'      => url(Config::get('swaggervel::app.doc-route')),
-            'requestHeaders' => Config::get('swaggervel::app.requestHeaders') )
-        ),
+        View::make('swaggervel::index', array('urlToDocs' => url(Config::get('swaggervel::app.doc-route')), 'requestHeaders' => Config::get('swaggervel::app.requestHeaders') )),
         200
     );
 

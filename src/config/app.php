@@ -12,7 +12,7 @@ return array(
       | Absolute path to location where parsed swagger annotations will be stored
       |--------------------------------------------------------------------------
     */
-    'doc-dir' => app_path() . '/storage/docs',
+    'doc-dir' => base_path() . '/storage/docs',
 
     /*
       |--------------------------------------------------------------------------
@@ -34,9 +34,9 @@ return array(
       |--------------------------------------------------------------------------
     */
     "excludes" => array(
-        app_path()."/storage",
-        app_path()."/tests",
-        app_path()."/views",
+        base_path()."/storage",
+        base_path()."/tests",
+        base_path()."/resources",
     ),
 
     /*
@@ -53,7 +53,7 @@ return array(
       | Edit to set the api's version number
       |--------------------------------------------------------------------------
     */
-    "default-api-version" => "",
+    "default-api-version" => "1s",
 
     /*
       |--------------------------------------------------------------------------
@@ -68,13 +68,6 @@ return array(
       |--------------------------------------------------------------------------
     */
     "default-base-path" => "",
-
-    /*
-      |--------------------------------------------------------------------------
-      | Edit to trust the proxy's ip address - needed for AWS Load Balancer
-      |--------------------------------------------------------------------------
-    */
-    "behind-reverse-proxy" => false,
     /*
       |--------------------------------------------------------------------------
       | Uncomment to add response headers when swagger is generated
