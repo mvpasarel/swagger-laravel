@@ -7,10 +7,10 @@ Route::any(Config::get('swaggervel::app.doc-route').'/{page?}', function($page='
         abort(404, "Cannot find {$filePath}");
     }
 
-    $content = File::get($filePath);
-    return Response::make($content, 200, array(
-        'Content-Type' => 'application/json'
-    ));
+    $content = json_decode(File::get($filePath), 1);
+    // Escaped slash is causing errors on fetching schema
+    return json_encode($content, JSON_UNESCAPED_SLASHES);
+
 });
 
 get('api-docs', function() {

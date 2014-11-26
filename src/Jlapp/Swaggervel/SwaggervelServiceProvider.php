@@ -18,7 +18,7 @@ class SwaggervelServiceProvider extends ServiceProvider {
 
         $this->commands(array('Jlapp\Swaggervel\InstallerCommand'));
 
-        require_once __DIR__ .'/routes.php';
+        require_once __DIR__ . '/routes.php';
     }
 
 }
