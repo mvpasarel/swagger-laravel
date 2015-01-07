@@ -14,7 +14,7 @@ class SwaggervelServiceProvider extends ServiceProvider {
      */
     public function register()
     {
-        $this->package('jlapp/swaggervel');
+        $this->app['config']->set('swaggervel', require __DIR__ . '/../../config/app.php');
 
         $this->commands(array('Jlapp\Swaggervel\InstallerCommand'));
 

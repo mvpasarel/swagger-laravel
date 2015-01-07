@@ -29,9 +29,6 @@ class InstallerCommand extends Command {
      */
     public function fire()
     {
-        $this->info("pushing config files to public");
-        $this->call('publish:config', array('package' => 'jlapp/swaggervel'));
-
         $this->info("Pushing swagger-ui assets to public folder");
         $this->call('publish:assets', array('package' => 'jlapp/swaggervel'));
     }
