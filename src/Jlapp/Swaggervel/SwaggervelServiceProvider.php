@@ -1,36 +1,38 @@
-<?php
+<?php namespace Jlapp\Swaggervel;
 
-namespace Jlapp\Swaggervel;
+use Illuminate\Support\ServiceProvider;
+use Jlapp\Swaggervel\Installer;
 
-use Illuminate\Console\Command;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputArgument;
+use Config;
 
-class InstallerCommand extends Command {
-
-    /**
-     * The console command name.
-     *
-     * @var string
-     */
-    protected $name = 'swaggervel:install';
+class SwaggervelServiceProvider extends ServiceProvider {
 
     /**
-     * The console command description.
+     * Register the service provider.
      *
-     * @var string
+     * @return void
      */
-    protected $description = 'pushes views to public folder';
-
-    /**
-     * Execute the console command.
-     *
-     * @return mixed
-     */
-    public function fire()
+    public function register()
     {
-        $this->info("Pushing swagger-ui assets to public folder");
-        $this->call('vendor:publish', ['--provider' => 'Jlapp\Swaggervel\SwaggervelServiceProvider']);
+
+        $this->mergeConfigFrom(
+            __DIR__.'/../../config/app.php', 'swaggervel'
+        );
+
+        $this->loadViewsFrom(__DIR__.'/../../views/swaggervel', 'swaggervel');
+
+        $this->commands(['Jlapp\Swaggervel\InstallerCommand']);
+    }
+
+    public function boot()
+    {
+
+        $this->publishes([
+            __DIR__.'/../../config/app.php' => config_path('swaggervel.php'),
+            __DIR__.'/../../../public' => base_path('public/packages/jlapp/swaggervel/'),
+        ]);
+
+        require_once __DIR__ . '/routes.php';
     }
 
 }
