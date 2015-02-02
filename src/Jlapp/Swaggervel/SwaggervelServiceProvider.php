@@ -14,13 +14,23 @@ class SwaggervelServiceProvider extends ServiceProvider {
      */
     public function register()
     {
-        $this->app['config']->set('swaggervel', require __DIR__ . '/../../config/app.php');
 
-        $this->commands(array('Jlapp\Swaggervel\InstallerCommand'));
+        $this->mergeConfigFrom(
+            __DIR__.'/../../config/app.php', 'swaggervel'
+        );
+
+        $this->loadViewsFrom(__DIR__.'/../../views/swaggervel', 'swaggervel');
+
+        $this->commands(['Jlapp\Swaggervel\InstallerCommand']);
     }
 
     public function boot()
     {
+
+        $this->publishes([
+            __DIR__.'/../..config/app.php' => config_path('swaggervel.php'),
+            __DIR__.'/../../../public' => base_path('public/packages/jlapp/swaggervel/'),
+        ]);
 
         require_once __DIR__ . '/routes.php';
     }

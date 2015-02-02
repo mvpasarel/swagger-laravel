@@ -30,7 +30,7 @@ class InstallerCommand extends Command {
     public function fire()
     {
         $this->info("Pushing swagger-ui assets to public folder");
-        $this->call('publish:assets', array('package' => 'jlapp/swaggervel'));
+        $this->call('vendor:publish ', ['provider' => 'Jlapp\Swaggervel\SwaggervelServiceProvider']);
     }
 
 }
