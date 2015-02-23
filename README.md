@@ -9,6 +9,20 @@ When you run your app in debug mode, Swaggervel will scan your app folder (or an
 
 Installation
 ============
+Using Composer
+
+
+	{   
+        "repositories": [
+        {
+            "type": "git",
+            "url": "git@github.com:mvpasarel/swagger-laravel.git"
+        }   
+        ],    
+       "require": {
+            "jlapp/swaggervel": "dev-laravel5"   
+        }
+    }
 
 - Add 'Jlapp\Swaggervel\SwaggervelServiceProvider' to your providers array in app/config/app.php
 - Run php artisan swaggervel:install to push swagger-ui to your public folder.
